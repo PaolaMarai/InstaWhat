@@ -60,11 +60,11 @@ router.post("/", (req, res) => {
 
 
 router.post("/login", (req, res) => {
-    var username = req.body.username;
+    var correo = req.body.correo;
     var password = req.body.password;
     console.log("intento de conexión")
 
-    if (!username || !password) {
+    if (!correo || !password) {
         res.status(400).json({
             message: "Invalid body params"
         })
@@ -72,7 +72,7 @@ router.post("/login", (req, res) => {
     }
 
     Usuario.findOne({
-        username: username,
+        correo: correo,
         password: password
     }, function (err, doc) {
         if (err) {
@@ -104,5 +104,8 @@ router.post("/login", (req, res) => {
     })
 
 });
+
+
+
 
 module.exports = router;

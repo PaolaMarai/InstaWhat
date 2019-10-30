@@ -1,28 +1,57 @@
 const usuario = require("../src/routes/api.usuario.route.js");
-const app = require("../src/app.js")
+const app = require("../src/app.js");
+var chai = require("chai");
+const url = 'http://localhost:8080';
+var chaiHttp = require('chai-http');
+var expect = require('chai').expect;
+chai.use(chaiHttp);
 
 
-var assert = require('assert');
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal([1, 2, 3].indexOf(4), -1);
+
+
+describe('Insert a usuario: ',()=>{
+  it('should insert a usuario', (done) => {
+  
+    chai.request(url)
+    .post('/api/usuario')
+    .send({
+      username: "prueba2",
+      password: "1234",
+      correo: "fmch2@hotmail.com"
+    })
+    .end( function(err,res){
+      console.log(res.body)
+      expect(res).to.have.status(200);
+      done()
     });
-  });
+  }).timeout(0);
 });
 
-var user 
+describe('Llogin: ',()=>{
+  
+  it('should llogin', (done) => {
+    chai.request(url)
+    .post('/api/usuario/login')
+    .send({
+      password: "1234",
+      correo: "fmch@hotmail.com"
+    })
+    .end( function(err,res){
+      console.log(res.body)
+      expect(res).to.have.status(200);
+      done()
+    });
+  }).timeout(0);
+});
 
-describe('Usuarios guardados', () =>{
-    it('usuarios guardados', done =>{
-        chai.requiest(app)
-        .get(usuario)
-        .end(function (err, res){
-            if(err) done(err);
-
-            done();
-
-            console.log('code', res.statusCode)
-        });
-    }).timeout(0);
+describe('get all usuarios: ',()=>{
+  it('should get all usuarios', (done) => {
+    chai.request(url)
+    .get('/api/usuario')
+    .end( function(err,res){
+      console.log(res.body)
+      expect(res).to.have.status(200);
+      done();
+    });
+  }).timeout(0);
 });
