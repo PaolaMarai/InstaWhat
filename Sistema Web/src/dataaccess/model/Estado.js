@@ -1,22 +1,22 @@
 const mongoose = require("../MongoConnect");
 const Schema = mongoose.Schema;
 
-var ModeradorSchema = new Schema({
+var EstadoSchema = new Schema({
 
-    password : {
+    descripcion : {
         type: String,
         required: true,
         trim: true
     },
 
-    correo : {
-        type: String,
+    fecha : {
+        type: Date,
         required: true,
-        unique: true,
         trim: true
     }
+
 });
 
 
-var Moderador = mongoose.model('moderador', ModeradorSchema);
-module.exports = Moderador;
+var Estado = mongoose.model('estado', EstadoSchema);
+module.exports = Estado;
