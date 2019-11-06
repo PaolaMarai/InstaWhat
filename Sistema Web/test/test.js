@@ -1,3 +1,4 @@
+
 const usuario = require("../src/routes/api.usuario.route.js");
 const app = require("../src/app.js");
 var chai = require("chai");
@@ -13,11 +14,11 @@ describe('Insert a usuario: ',()=>{
   it('should insert a usuario', (done) => {
   
     chai.request(url)
-    .post('/api/usuario')
+    .post('/api/usuario/Registro')
     .send({
-      username: "prueba2",
+      username: "prueba4",
       password: "1234",
-      correo: "fmch2@hotmail.com"
+      correo: "soy-yonotu@hotmail.com"
     })
     .end( function(err,res){
       console.log(res.body)

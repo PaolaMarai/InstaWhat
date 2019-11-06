@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken")
 const token_secret = 'secret';
 
-function IniciarSesion(req, res, next){
+exports.IniciarSesion = function(req, res, next){
     var token = req.headers["authorization"]
     if(!token){
         res.status(401).json({
@@ -21,6 +21,4 @@ function IniciarSesion(req, res, next){
             next()
         }
     });
-}
-
-module.exports = IniciarSesion
+};
