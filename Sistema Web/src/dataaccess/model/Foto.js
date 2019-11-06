@@ -1,14 +1,7 @@
 const mongoose = require("../MongoConnect");
 const Schema = mongoose.Schema;
 
-var ReportSchema = new Schema({
-
-    idReporte : {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
-    },
+var FotoSchema = new Schema({
 
     idFoto : {
         type: String,
@@ -17,25 +10,33 @@ var ReportSchema = new Schema({
         trim: true
     },
 
-    fecha : {
-        type: Date,
-        required: false,
-        trim: true
-    },
-
     descripcion : {
         type: String,
         required: true,
         trim: true
+    },
+
+    fecha : {
+        type: Date,
+        required: true,
+        trim: true
 
     },
 
-    asunto : {
+    reaccion : {
+        type: String,
+        required: false,
+        trim: true
+    },
+    
+    url : {
         type: String,
         required: true,
         trim: true
     }
+
 });
 
-var Report = mongoose.model('report', ReportSchema);
-module.exports = Report;
+
+var Foto = mongoose.model('foto', FotoSchema);
+module.exports = Foto;

@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Report = require("../dataaccess/model/Report");
-const config = require("../config");
 
-router.get("/", (req, res) => {
+router.get("/", (res) => {
     Report.find(function(err, docs){
         if(err){
             res.status(500).json({
@@ -24,7 +23,6 @@ router.post("/", (req, res) => {
     var asunto = req.body.asunto;
     var dat = new Date();
 
-    //Verificamos existan
     if(idReporte === undefined){
         res.status(400).json({
             "message": "Invalid body params"
@@ -32,7 +30,6 @@ router.post("/", (req, res) => {
         return false;
     }
 
-    //Creamos un objeto 
     var report  = new Report({
         idReporte: idReporte,
         fecha: dat,
