@@ -5,13 +5,19 @@ var EstadoSchema = new Schema({
 
     descripcion : {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
 
     fecha : {
-        type: Date,
+        type: String,
         required: true,
+        trim: true
+    },
+    correo : {
+        type: String,
+        required: true,
+        unique: true,
         trim: true
     }
 

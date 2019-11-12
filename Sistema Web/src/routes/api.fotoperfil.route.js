@@ -4,8 +4,6 @@ const fotoperfil = require("../dataaccess/model/FotoPerfil");
 
 router.get("/", (req, res) => {
     var correo = req.body.correo;
-    console.log("intento de conexión")
-
     if (!correo) {
         res.status(400).json({
             message: "Invalid body params"

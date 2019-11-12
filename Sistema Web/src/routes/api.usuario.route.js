@@ -7,8 +7,13 @@ const expressValidator = require('express-validator');
 const EnviarNip = require('../MiddleWare/EnviarNip');
 const fotoP = require('./api.fotoperfil.route');
 const fotoperfil = require('../dataaccess/model/FotoPerfil');
+const FotoPerfilMW = require('../MiddleWare/FotoPerfil');
+const estado = require('../dataaccess/model/Estado');
 const randomMin = 1000;
 const randomMax = 9999;
+const nuevoStatus = 'nuevo';
+const nuevoEstado = 'Hola soy nuevo'
+const statusActivo = 'activado'
 
 router.use("/fotoperfil", fotoP);
 
@@ -56,17 +61,20 @@ router.post("/registro", [expressValidator.check('correo').isEmail()], (req, res
         password: password,
         correo: correo,
         nip: nip,
-        status: 'nuevo'
+        status: nuevoStatus
 
     });
 
-    var foto = new fotoperfil({
+    var date = new Date();
+
+    var estadoNuevo = new estado({
+        descripcion: nuevoEstado,
         correo: correo,
-        foto: "sin foto"
+        fecha: date.getDate().toString()
     });
 
     //Ejecutamos la funcion guardar y verificamos el resultado
-    usuario.save(function (err, doc) {
+    usuario.save(function (err, user) {
         if(err){
             res.status(500).json({
                 message: "Error al ejecutar save"
@@ -75,7 +83,7 @@ router.post("/registro", [expressValidator.check('correo').isEmail()], (req, res
             return false;
         }
 
-        foto.save(function (err, doc2) {
+        estadoNuevo.save(function (err, estado) {
             if(err){
                 res.status(500).json({
                     message: "Error al ejecutar save"
@@ -83,25 +91,21 @@ router.post("/registro", [expressValidator.check('correo').isEmail()], (req, res
                 console.error(err);
                 return false;
             }
-            console.log('foto guardada')
-            res.json({
-                doc, doc2
-                });
+            FotoPerfilMW.registrarFotoPerfil(correo,res);
+                res.json({
+                    user
+            });
         });
     });
-
     EnviarNip.sendEmail(correo,nip);
 
-    return 'Usuario guardado';
-
-    
+    return 'Usuario guardado'; 
 });
 
 
 router.post("/login", (req, res) => {
     var correo = req.body.correo;
     var password = req.body.password;
-    console.log("intento de conexión")
 
     if (!correo || !password) {
         res.status(400).json({
@@ -122,18 +126,27 @@ router.post("/login", (req, res) => {
             return
         }
         if (doc) {
-            var tokenPayload = {
-                _id: doc._id,
-                username: doc.username
+            if (doc.status == statusActivo ) {
+                
+                var tokenPayload = {
+                    _id: doc._id,
+                    username: doc.username
+                }
+    
+                var token = jwt.sign(tokenPayload, config.TOKEN_SECRET, {
+                    expiresIn: 60 * 60 * 24 * 7 // Expira en una semana
+                })
+    
+                res.json({
+                    token: token
+                })
+                
+            } else {
+
+                res.json({
+                    token: doc.status
+                })
             }
-
-            var token = jwt.sign(tokenPayload, config.TOKEN_SECRET, {
-                expiresIn: 60 * 60 * 24 * 7 // Expira en una semana
-            })
-
-            res.json({
-                token: token
-            })
 
         } else {
             res.status(401).json({
@@ -160,7 +173,7 @@ router.put("/activar", (req, res) => {
         return;
     }
 
-    Usuario.findOneAndUpdate({
+    Usuario.updateOne({
         correo : correo,
         password : password,
         nip : nip

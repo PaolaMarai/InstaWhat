@@ -1,6 +1,7 @@
 const mongoose = require("../MongoConnect");
 const Schema = mongoose.Schema;
 
+
 var FotoSchema = new Schema({
 
     correo : {
@@ -12,7 +13,7 @@ var FotoSchema = new Schema({
     
    descripcion : {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
 
@@ -23,13 +24,7 @@ var FotoSchema = new Schema({
 
     },
 
-    reaccion : {
-        type: String,
-        required: false,
-        trim: true
-    },
-    
-    url : {
+    ubicacion : {
         type: String,
         required: true,
         trim: true
