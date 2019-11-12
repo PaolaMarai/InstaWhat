@@ -1,12 +1,12 @@
 const mongoose = require("../MongoConnect");
-mongoose.set('useFindAndModify', true);
+mongoose.set('useFindAndModify', false);
 const Schema = mongoose.Schema;
 
 var FotoPerfilSchema = new Schema({
 
     foto : {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
 

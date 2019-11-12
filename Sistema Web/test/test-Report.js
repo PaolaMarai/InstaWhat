@@ -1,3 +1,5 @@
+
+/*
 const report = require("../src/routes/api.report.route.js");
 const app = require("../src/app.js");
 
@@ -95,3 +97,5 @@ describe('get all reports: ',()=>{
     });
   }).timeout(0);
 });
+
+*/

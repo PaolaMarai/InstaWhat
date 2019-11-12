@@ -1,4 +1,4 @@
-
+/*
 const usuario = require("../src/routes/api.usuario.route.js");
 const app = require("../src/app.js");
 var chai = require("chai");
@@ -56,3 +56,4 @@ describe('get all usuarios: ',()=>{
     });
   }).timeout(0);
 });
+*/
