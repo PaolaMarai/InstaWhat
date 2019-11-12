@@ -5,7 +5,7 @@ const FotoPerfil = require('../src/dataaccess/model/FotoPerfil')
 var chai = require("chai");
 var expect = require('chai').expect;
 //chai.use(FotoPerfils);
-
+W
 
 var assert = require('assert');
 
