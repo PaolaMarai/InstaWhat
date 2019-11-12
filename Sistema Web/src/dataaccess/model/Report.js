@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 var ReportSchema = new Schema({
 
-    idReporte : {
+    correo : {
         type: String,
         required: true,
         unique: true,
         trim: true
     },
-
+    
     idFoto : {
         type: String,
         required: true,

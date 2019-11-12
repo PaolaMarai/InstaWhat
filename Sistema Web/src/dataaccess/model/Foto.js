@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 var FotoSchema = new Schema({
 
-    idFoto : {
+    correo : {
         type: String,
         required: true,
         unique: true,
         trim: true
     },
-
-    descripcion : {
+    
+   descripcion : {
         type: String,
         required: true,
         trim: true
