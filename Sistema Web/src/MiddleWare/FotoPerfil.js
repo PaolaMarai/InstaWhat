@@ -2,9 +2,8 @@ const fotoPefil = require('../dataaccess/model/FotoPerfil');
 
 
 // email sender function
-exports.registrarFotoPerfil = function(correo, res){
+exports.registrarFotoPerfil = function(correo){
 
-    var resultado = false;
     var foto = new fotoPefil({
         correo: correo,
         foto: ""
@@ -16,11 +15,7 @@ exports.registrarFotoPerfil = function(correo, res){
                 message: "Error al ejecutar save"
             })
             console.error(err);
-            resultado = false;
         }
-        res.json({
-            fotoperfil
-        });
             
     });
         

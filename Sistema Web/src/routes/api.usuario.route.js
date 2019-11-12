@@ -91,7 +91,7 @@ router.post("/registro", [expressValidator.check('correo').isEmail()], (req, res
                 console.error(err);
                 return false;
             }
-            FotoPerfilMW.registrarFotoPerfil(correo,res);
+            FotoPerfilMW.registrarFotoPerfil(correo);
                 res.json({
                     user
             });
