@@ -1,6 +1,6 @@
 NODE_ENV=development
 MONGODB_CONNECTION_STRING=mongodb://localhost/instawhat
-PORT=27017
+PORT=8888
 BINDIND_IP=0.0.0.0
 TOKEN_SECRET="secret"
 EMAIL="fmch1127@gmail.com"
