@@ -10,6 +10,19 @@ var ComentarioSchema = new Schema({
         trim: true
     },
 
+    correo: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    idComentario: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+    },
+
     descripcion : {
         type: String,
         required: true,

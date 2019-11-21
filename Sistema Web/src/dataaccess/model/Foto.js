@@ -28,6 +28,16 @@ var FotoSchema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+
+    reacciones: {
+        type: Array,
+        required: false
+    },
+
+    comentarios: {
+        type: Array,
+        required: false
     }
 
 });

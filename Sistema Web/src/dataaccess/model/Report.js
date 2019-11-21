@@ -6,11 +6,16 @@ var ReportSchema = new Schema({
     correo : {
         type: String,
         required: true,
-        unique: true,
         trim: true
     },
     
     idFoto : {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    idReporte : {
         type: String,
         required: true,
         unique: true,

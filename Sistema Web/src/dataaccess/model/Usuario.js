@@ -19,6 +19,7 @@ var UsuarioSchema = new Schema({
     username : {
         type: String,
         required: true,
+        unique: true,
         trim: true
     },
     
@@ -32,6 +33,16 @@ var UsuarioSchema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+
+    contactos : {
+        type: Array,
+        required: false
+    },
+
+    fotosFavoritas: {
+        type: Array,
+        required: false
     }
 
 });
