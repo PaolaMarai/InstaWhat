@@ -10,7 +10,7 @@ const statusActivo = 'activado'
 
 router.use("/fotoperfil", fotoP);
 
-router.get("/", (req,res) => {
+router.post("/", (req,res) => {
     var correo = req.body.correo;
 
    Contacto.find({
@@ -28,7 +28,7 @@ router.get("/", (req,res) => {
     });
 });
 
-router.get("/buscar", (req,res) => {
+router.post("/buscar", (req,res) => {
     var correo = req.body.correo;
     var correoContacto = req.body.correoContacto;
    Contacto.findOne({

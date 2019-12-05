@@ -17,7 +17,7 @@ router.get("/", (res) => {
 });
 
 //Obtiene reportes de una foto
-router.get("/report_list", (req, res) => {
+router.post("/reportes", (req, res) => {
     var idFoto = req.idFoto;
 
     if(idFoto === undefined){
@@ -48,9 +48,6 @@ router.get("/report_list", (req, res) => {
 })
 
 router.post("/", (req, res) => {
-
-    //var idReporte = req.body.idReporte;
-    //var fecha = req.body.fecha;
     var correo = req.body.correo;
     var idFoto = req.body.idFoto;
     var idReporte = correo+idFoto+"_R";
@@ -74,7 +71,20 @@ router.post("/", (req, res) => {
         asunto: asunto
     });
 
-    reporte.save(function (err, doc) {
+    Reporte.findOne({idReporte: idReporte},  
+        function(err, docs){
+        if (err) {
+            res.status(500).json({
+                message: "Data base error"
+            })
+            console.error(err)
+            return
+        } if (docs) {
+            res.json({
+                message: "Reporte existente"
+            });
+        } else {
+            reporte.save(function (err, doc) {
         if(err){
             res.status(500).json({
                 message: "Error al ejecutar save"
@@ -84,8 +94,27 @@ router.post("/", (req, res) => {
         }
         res.json(doc);
     });
-
-    return;
+        }
+    });
 });
+
+router.delete("/eliminar", (req,res)=>{
+    idFoto = req.body.idFoto;
+    Reporte.remove({
+        idFoto: idFoto
+    },function(err){
+        if (err) {
+            res.status(500).json({
+                message: "Data base error"
+            })
+            console.error(err)
+            return
+        } else{
+            res.status(200).json({
+                message: "OK"
+            });
+        }
+    })
+})
 
 module.exports = router;

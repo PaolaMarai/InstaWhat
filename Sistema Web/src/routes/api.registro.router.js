@@ -8,8 +8,7 @@ const fotoP = require('./api.fotoperfil.route');
 const fotoperfil = require('../dataaccess/model/FotoPerfil');
 const FotoPerfilMW = require('../MiddleWare/FotoPerfil');
 const filesaver = require('../MiddleWare/FIleSaver')
-const tokenMW = require('../MiddleWare/TokenMW');
-router.use(tokenMW);
+
 
 const randomMin = 1000;
 const randomMax = 9999;

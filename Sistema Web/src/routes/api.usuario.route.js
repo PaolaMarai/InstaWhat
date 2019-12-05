@@ -31,7 +31,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/user", (req, res) => {
+router.post("/user", (req, res) => {
     //Regresa un solo usuario
     
     var correo = req.body.correo;    
