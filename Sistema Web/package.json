@@ -32,6 +32,8 @@
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.2.2",
     "mongoose": "^5.7.7",
-    "nodemailer": "^6.3.1"
+    "nodemailer": "^6.3.1",
+    "jshint" : "2.10.3"
+    
   }
 }

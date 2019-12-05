@@ -35,11 +35,6 @@ var UsuarioSchema = new Schema({
         trim: true
     },
 
-    contactos : {
-        type: Array,
-        required: false
-    },
-
     fotosFavoritas: {
         type: Array,
         required: false

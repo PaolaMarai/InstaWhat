@@ -1,5 +1,5 @@
 const mongoose = require("../MongoConnect");
-const Schema = mongoose.require.Schema;
+const Schema = mongoose.Schema;
 
 var ReaccionSchema = new Schema({
 
@@ -28,4 +28,7 @@ var ReaccionSchema = new Schema({
         trim: true
     }
 
-})
+});
+
+var Reaccion = mongoose.model('reaccion',ReaccionSchema);
+module.exports = Reaccion;

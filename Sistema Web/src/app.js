@@ -2,8 +2,6 @@ const express = require('express');
 const app = express();
 const apiRoute = require("./routes/api.route");
 const bodyParser = require("body-parser");
-const usuario = require("./dataaccess/model/Usuario");
-const jwt = require("jsonwebtoken");
 const config = require("./config");
 
 app.use(bodyParser.json({limit: '20mb'}));
