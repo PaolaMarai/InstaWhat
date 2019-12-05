@@ -1,62 +1,69 @@
-
-const usuario = require("../src/routes/api.usuario.route.js");
-const app = require("../src/app.js");
+const Usuario = require("../src/dataaccess/model/Usuario");
+const FotoPerfil = require('../src/dataaccess/model/FotoPerfil');
 var chai = require("chai");
-const url = 'http://localhost:8080';
-var chaiHttp = require('chai-http');
 var expect = require('chai').expect;
-chai.use(chaiHttp);
+var assert = require('chai').assert;
+var resultado;
+
+var correo = "usuario@test.com";
+var password = "password";
+var username =  "usuarioTest";
+var nip = "1234";
+var status = "activado";
+var estado = "Hola, soy nuevo";
 
 
-
-
-describe('Insert a usuario: ',()=>{
-  it('should insert a usuario', (done) => {  
-    chai.request(url)
-    .post('/api/usuario/registro')
-    .send({
-        username: "prueba",
-        password: "1234",
-        correo: "prueba@hotmail.com"
-    })
-    .end( function(err,res){
-      if (err) {
-        console.error.apply(err)
-      } else {
-        console.log(res.body)
-      }
-      expect(res).to.have.status(200);
-      done()
-    });
-  }).timeout(0);
-});
-
-describe('Llogin: ',()=>{
-  it('should llogin', (done) => {
-    chai.request(url)
-    .post('/api/usuario/login')
-    .send({
-      password: "1234",
-      correo: "prueba@hotmail.com"
-    })
-    .end( function(err,res){
+  describe('insertar usuario', function () {
+    
+    before(function (done) {
       
-      console.log(res.body)
-      expect(res).to.have.status(200);
-      done()
+      var usuario  = new Usuario({
+        username: username,
+        password: password,
+        correo: correo,
+        nip: nip,
+        status: status,
+        estado: estado
+
     });
-  }).timeout(0);
-});
-
-
-describe('get all usuarios: ',()=>{
-  it('should get all usuarios', (done) => {
-    chai.request(url)
-    .get('/api/usuario')
-    .end( function(err,res){
-      console.log(res.body)
-      expect(res).to.have.status(200);
+    
+    usuario.save(function (err) {
+        if(err){
+            console.error(err);
+            
+        }
+      });
       done();
     });
-  }).timeout(0);
-});
+
+    
+    after(function (done) {
+      
+      Usuario.findOne({
+        correo: correo,
+        password: password
+    }, function (err, doc) {
+        if (err) {
+            res.status(500).json({
+                message: "Error en la BD"
+            })
+            console.error(err)
+            reesultado = false;
+        }
+        if (doc) {
+          ressultado = true;
+         } else {
+            resultado = false;
+        }
+      });
+      done();
+    });
+
+    it('usuarioRegistrado', function (done) {
+      console.log("resultado: ")
+      console.log(resultado);
+      assert.equal(true, true);
+      done();
+    });
+
+  });

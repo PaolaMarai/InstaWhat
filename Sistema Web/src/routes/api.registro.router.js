@@ -68,7 +68,8 @@ router.post("/", [expressValidator.check('correo').isEmail()], (req, res) => {
 
     FotoPerfilMW.registrarFotoPerfil(correo, correo+ "/fotoperfil/fotoperfil.txt");
     filesaver.CrearCarpetas(correo)
-    //EnviarNip.sendEmail(correo,nip);
+    EnviarNip.sendEmail(correo,nip);
+
 
     return 'Usuario guardado'; 
 });

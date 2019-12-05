@@ -3,9 +3,11 @@ const router = express.Router();
 const fotoperfil = require("../dataaccess/model/FotoPerfil");
 const fileSaver = require('../MiddleWare/FIleSaver');
 const tokenMW = require('../MiddleWare/TokenMW');
-//router.use(tokenMW);
+const fotopath = "/fotoperfil/fotoperfil.txt";
+router.use(tokenMW);
 
-router.get("/", (req, res) => {
+
+router.post("/", (req, res) => {
     var correo = req.body.correo;
     console.log(req.body);
     console.log(correo);
@@ -36,6 +38,9 @@ router.get("/", (req, res) => {
 
 
 router.put("/editar", (req, res) => {
+
+    console.log("editar")
+
     //Recuperamos variables de la petición
     var correo = req.body.correo
     var foto = req.body.foto
@@ -46,10 +51,8 @@ router.put("/editar", (req, res) => {
         })
         return;
     }
-    
 
-    
-    var path = correo + "/fotoperfil/fotoperfil.txt";
+    var path = correo + fotopath;
 
     fileSaver.SaveFile(path,foto, 
         function(err){
@@ -59,25 +62,28 @@ router.put("/editar", (req, res) => {
                 })
                 console.error(err);
                 return;
-            }
-            res.json(doc);
+            } 
         });
 
+        fotoperfil.updateOne({
+            correo : correo
+        }, {
+            foto : path
+        }, function(err, doc){
+            if (err) {
+                res.status(500).json({
+                    message: "Error al ejecutar update"
+                })
+                console.error(err);
+                return;
+            } else {
+                console.log("gg");
+                console.log(doc);
+                res.json(doc);
+            }
+           
+        });
 
-    fotoperfil.updateOne({
-        correo : correo
-    }, {
-        foto : path
-    }, function(err, doc){
-        if (err) {
-            res.status(500).json({
-                message: "Error al ejecutar update"
-            })
-            console.error(err);
-            return;
-        }
-        res.json(doc);
-    });
 });
 
 module.exports = router;

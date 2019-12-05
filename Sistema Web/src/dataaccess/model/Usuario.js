@@ -35,9 +35,10 @@ var UsuarioSchema = new Schema({
         trim: true
     },
 
-    fotosFavoritas: {
-        type: Array,
-        required: false
+    estado : {
+        type: String,
+        required: false,
+        trim: true
     }
 
 });

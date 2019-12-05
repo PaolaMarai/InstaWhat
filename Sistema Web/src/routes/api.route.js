@@ -3,6 +3,7 @@ const router = express.Router();
 
 const usuario = require("./api.usuario.route");
 const report = require("./api.report.route");
+
 const foto = require("./api.foto.router");
 const fotoperfil = require("./api.fotoperfil.route");
 const registro = require("./api.registro.router");
@@ -18,5 +19,6 @@ router.use("/registro", registro);
 router.use("/login", login);
 router.use("/contacto",contacto);
 //router.use("/reacion", reaccion);
+
 
 module.exports = router;
