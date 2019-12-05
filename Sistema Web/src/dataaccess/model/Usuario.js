@@ -32,6 +32,12 @@ var UsuarioSchema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+
+    estado : {
+        type: String,
+        required: false,
+        trim: true
     }
 
 });

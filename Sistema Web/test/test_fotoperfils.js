@@ -1,44 +1,60 @@
 /*
-const fotoperfil = require("../src/MiddleWare/FotoPerfil");
-const FotoPerfil = require('../src/dataaccess/model/FotoPerfil')
-//const app = require("../src/app.js");
-var chai = require("chai");
-var expect = require('chai').expect;
-//chai.use(FotoPerfils);
-W
+var assert = require('chai').assert;
+var channelsDB = require('../db/channels');
+var channelNamesArray = ['test channel 1', 'test channel 2', 'test channel 3'];
 
-var assert = require('assert');
 
-describe('Test Suite 1', function() {
-    it('Test 1', function() {
-        assert.ok(true, "This shouldn't fail");
+describe('Channels', function () {
+  describe('#get()', function () {
+    var channelIds = [];
+
+    // Create 3 channels in DB
+    before(function (done) {
+      var numChannelsCreated = 0;
+      channelNamesArray.forEach(function (channelName) {
+        var channel = new channelsDB.Channel({name: channelName})
+        channel.save(function (error, channel) {
+          if (error) throw error;
+          channelIds.push(channel._id);
+          numChannelsCreated++;
+          if (numChannelsCreated == channelNamesArray.length) {
+            done();
+          }
+        })
+      })
     })
 
-    it('Test 2', function() {
-        assert.ok(1 === 1, "This shouldn't fail");
-        //assert.ok(false, "This should fail");
+    // remove the 3 channels created before
+    after(function (done) {
+      var numChannelsRemoved = 0;
+      channelNamesArray.forEach(function (channelName) {
+        channelsDB.getChannelByName(channelName, function (error, channel) {
+          if (error) throw error;
+          channel.remove(function () {
+            numChannelsRemoved++;
+            if (numChannelsRemoved == channelNamesArray.length) {
+              done();
+            }
+          })
+        })
+      })
     })
-})
-
-var assert = require('assert');
-describe('Foto perfil', function() {
-  it("crear foto", function() {
-
-    var foto = new FotoPerfil({
-      correo: "correo@prueba.com",
-      foto: "sin foto"
-    });
-  
-    var resultado = fotoperfil.registrarFotoPerfil(foto);
-      
-    console.log(resultado);
 
 
-  })
+    it('Should get all channels without error', function (done) {
+      channelsDB.getChannels(function (error, channels) {
+        assert.isAtLeast(channels.length, 3);
+        done();
+      })
+    })
 
-  it("Editar foto", function() {
-    
+
+    it('Should get one channel by id without error', function (done) {
+      channelsDB.getChannel(channelIds[0], function (error, channel) {
+        assert.isNotNull(channel);
+        done();
+      })
+    })
   })
 })
-
 */
