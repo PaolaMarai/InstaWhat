@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Foto = require("../dataaccess/model/Foto");
+const fileSaver = require('../MiddleWare/FileSaver');
+const dirfoto = '/fotos/';
+const extension = '.txt';
 
 router.get("/", (res) => {
     Foto.find(function(err, docs){
@@ -35,28 +38,28 @@ router.get("/content", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
-    var idFoto = req.body.idFoto;
+router.put("/publicar", (req, res) => {
+    var foto = req.body.foto;
     var descripcion = req.body.descripcion;
-    var url = req.body.url;
+    var correo = req.body.correo;
     var fecha = new Date();
 
-    if(idFoto === undefined){
+    if(foto === undefined){
         res.status(400).json({
             "message": "Invalid body params"
         })
         return false;
     }
 
-    var Foto  = new Foto({
-        idFoto: idFoto,
+    var publicacion  = new Foto({
+        ubicacion: "temporal",
         fecha: fecha,
         descripcion: descripcion,
-        url: url
+        correo: correo
         
     });
 
-    Foto.save(function (err, doc) {
+    publicacion.save(function (err, doc) {
         if(err){
             res.status(500).json({
                 message: "Error al ejecutar save"
@@ -64,8 +67,37 @@ router.post("/", (req, res) => {
             console.error(err);
             return false;
         }
+
+        fileSaver.SaveFile(correo + dirfoto + doc._id + extension,foto, 
+        function(err){
+            if (err) {
+                res.status(500).json({
+                    message: "Error al ejecutar update"
+                })
+                console.error(err);
+                return;
+            } 
+        });
+
+        Foto.updateOne({
+            _id : doc._id
+        }, {
+            ubicacion : correo + dirfoto + doc._id + extension
+        }, function(err, doc){
+            if (err) {
+                res.status(500).json({
+                    message: "Error al ejecutar update"
+                })
+                console.error(err);
+                return;
+            } 
+        });
         res.json(doc);
     });
+
+    
+
+    
 
     return 'Foto guardada';
 });

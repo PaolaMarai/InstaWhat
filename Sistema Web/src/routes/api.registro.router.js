@@ -7,8 +7,12 @@ const EnviarNip = require('../MiddleWare/EnviarNip');
 const fotoP = require('./api.fotoperfil.route');
 const fotoperfil = require('../dataaccess/model/FotoPerfil');
 const FotoPerfilMW = require('../MiddleWare/FotoPerfil');
+<<<<<<< Updated upstream
 const filesaver = require('../MiddleWare/FIleSaver')
 
+=======
+const filesaver = require('../MiddleWare/FileSaver')
+>>>>>>> Stashed changes
 
 const randomMin = 1000;
 const randomMax = 9999;
@@ -65,7 +69,7 @@ router.post("/", [expressValidator.check('correo').isEmail()], (req, res) => {
         });
     });
 
-    FotoPerfilMW.registrarFotoPerfil(correo, correo+ "/fotoperfil/fotoperfil.txt");
+    FotoPerfilMW.registrarFotoPerfil(correo, "../../" + correo+ "/fotoperfil/fotoperfil.txt");
     filesaver.CrearCarpetas(correo)
     EnviarNip.sendEmail(correo,nip);
 

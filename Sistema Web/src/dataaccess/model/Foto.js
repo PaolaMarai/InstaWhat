@@ -7,7 +7,7 @@ var FotoSchema = new Schema({
     correo : {
         type: String,
         required: true,
-        unique: true,
+        unique: false,
         trim: true
     },
     
@@ -28,16 +28,6 @@ var FotoSchema = new Schema({
         type: String,
         required: true,
         trim: true
-    },
-
-    reacciones: {
-        type: Array,
-        required: false
-    },
-
-    comentarios: {
-        type: Array,
-        required: false
     }
 
 });

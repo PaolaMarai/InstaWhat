@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const fotoperfil = require("../dataaccess/model/FotoPerfil");
-const fileSaver = require('../MiddleWare/FIleSaver');
+const fileSaver = require('../MiddleWare/FileSaver');
 const tokenMW = require('../MiddleWare/TokenMW');
 const fotopath = "/fotoperfil/fotoperfil.txt";
 router.use(tokenMW);
-
 
 router.post("/", (req, res) => {
     var correo = req.body.correo;
@@ -51,8 +50,8 @@ router.put("/editar", (req, res) => {
         })
         return;
     }
-
-    var path = correo + fotopath;
+    
+    var path = "../../" + correo + fotopath;
 
     fileSaver.SaveFile(path,foto, 
         function(err){
@@ -77,8 +76,6 @@ router.put("/editar", (req, res) => {
                 console.error(err);
                 return;
             } else {
-                console.log("gg");
-                console.log(doc);
                 res.json(doc);
             }
            

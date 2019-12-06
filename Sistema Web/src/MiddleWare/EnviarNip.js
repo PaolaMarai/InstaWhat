@@ -24,13 +24,11 @@ var mailOptions = {
     text: nip   
 };
 // Enviamos el email
-transporter.sendMail(mailOptions, function(error, info){
+transporter.sendMail(mailOptions, function(error, res){
     if (error){
         console.log(error);
-        res.send(500, err.message);
     } else {
         console.log("Email sent");
-        res.status(200).jsonp(req.body);
     }
 });
 };
