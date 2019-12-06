@@ -51,7 +51,7 @@ router.put("/editar", (req, res) => {
         return;
     }
     
-    var path = "../../" + correo + fotopath;
+    var path = correo + fotopath;
 
     fileSaver.SaveFile(path,foto, 
         function(err){
@@ -67,7 +67,7 @@ router.put("/editar", (req, res) => {
         fotoperfil.updateOne({
             correo : correo
         }, {
-            foto : path
+            foto : "../../" + path
         }, function(err, doc){
             if (err) {
                 res.status(500).json({

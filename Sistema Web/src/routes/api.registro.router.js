@@ -7,12 +7,7 @@ const EnviarNip = require('../MiddleWare/EnviarNip');
 const fotoP = require('./api.fotoperfil.route');
 const fotoperfil = require('../dataaccess/model/FotoPerfil');
 const FotoPerfilMW = require('../MiddleWare/FotoPerfil');
-<<<<<<< Updated upstream
-const filesaver = require('../MiddleWare/FIleSaver')
-
-=======
 const filesaver = require('../MiddleWare/FileSaver')
->>>>>>> Stashed changes
 
 const randomMin = 1000;
 const randomMax = 9999;

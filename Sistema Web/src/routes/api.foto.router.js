@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Foto = require("../dataaccess/model/Foto");
 const fileSaver = require('../MiddleWare/FileSaver');
+const tokenMW = require('../MiddleWare/TokenMW');
+router.use(tokenMW);
 const dirfoto = '/fotos/';
 const extension = '.txt';
 
