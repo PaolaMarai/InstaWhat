@@ -28,11 +28,6 @@ var FotoSchema = new Schema({
         type: String,
         required: true,
         trim: true
-    },
-    foto:{
-        type: String,
-        required: true,
-        trim: true
     }
 
 });
