@@ -84,7 +84,7 @@ router.put("/publicar", (req, res) => {
         Foto.updateOne({
             _id : doc._id
         }, {
-            ubicacion : correo + dirfoto + doc._id + extension
+            ubicacion : "../../" + correo + dirfoto + doc._id + extension
         }, function(err, doc){
             if (err) {
                 res.status(500).json({
@@ -96,11 +96,6 @@ router.put("/publicar", (req, res) => {
         });
         res.json(doc);
     });
-
-    
-
-    
-
     return 'Foto guardada';
 });
 
@@ -128,5 +123,49 @@ router.post("/reaccion", (req, res) => {
 
     return 'Reacción asignada';
 });
+
+
+
+router.post("/consultarpublicaciones", (req, res) => {
+    var skip = req.body.skip;
+    var limit = req.body.limit;
+
+    if(skip === undefined){
+        res.status(400).json({
+            "message": "Invalid body params"
+        })
+        return false;
+    }
+
+    Foto.find(function(err, docs){
+        if(err){
+            res.status(500).json({
+                "message": "Hubo un error al ejecutar la consulta"
+            });
+            console.error(err);
+            return;
+        }
+
+        var jsonArrayResponse = [];
+        var fs = require('fs');
+        docs.forEach((doc)=> {
+            var data = fs.readFileSync(doc.ubicacion).toString();
+            
+            var jsonPublicacion = {
+                correo : doc.correo,
+                descripcion : doc.descripcion,
+                fecha : doc.fecha,
+                foto : data
+            };
+            jsonArrayResponse.push(jsonPublicacion);
+        });
+
+         res.json(jsonArrayResponse);
+    }).skip(skip).limit(limit);
+
+    return;
+});
+
+
 
 module.exports = router;

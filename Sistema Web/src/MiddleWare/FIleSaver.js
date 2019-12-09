@@ -26,3 +26,7 @@ exports.CrearCarpetas = function(path){
         });
     
 };
+
+exports.getFoto = function(path){
+    return fs.readFileSync(path).toString();
+};

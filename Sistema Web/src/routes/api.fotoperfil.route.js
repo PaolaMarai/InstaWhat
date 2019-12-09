@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
                 message: "Username not found"
             });
         } else {
-            var fs = require('fs'), readline = require('readline');
+            var fs = require('fs');
             var data = fs.readFileSync(docFoto.foto).toString();
            res.json({
                 foto: data
