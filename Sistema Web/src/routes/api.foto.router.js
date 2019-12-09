@@ -127,8 +127,8 @@ router.post("/reaccion", (req, res) => {
 
 
 router.post("/consultarpublicaciones", (req, res) => {
-    var skip = parseInt(req.body.skip, 10);
-    var limit = parseInt(req.body.limit, 10);
+    var skip = req.body.skip;
+    var limit = req.body.limit;
 
     if(skip === undefined){
         res.status(400).json({
@@ -160,7 +160,6 @@ router.post("/consultarpublicaciones", (req, res) => {
             };
             jsonArrayResponse.push(jsonPublicacion);
         });
-
          res.json(jsonArrayResponse);
     }).skip(skip).limit(limit);
 
