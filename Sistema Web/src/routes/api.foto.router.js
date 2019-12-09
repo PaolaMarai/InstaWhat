@@ -8,7 +8,7 @@ const dirfoto = '/fotos/';
 const extension = '.txt';
 
 router.get("/", (res) => {
-    Foto.find(function(err, docs){
+    Foto.find({}).sort('-date').exec(function(err, docs){
         if(err){
             res.status(500).json({
                 "message": "Hubo un error al ejecutar la consulta"
@@ -16,6 +16,24 @@ router.get("/", (res) => {
             console.error(err);
             return;
         }
+        let newDocs;
+        for(let doc in docs){
+            
+            let fs = require('fs');
+            fs.readFile(doc.ubicacion, 'utf-8', (err, data) => {
+                if(err) {
+                    console.log('error: ', err);
+                } else {
+                    console.log(data);
+                    doc.replace({
+                        foto: data
+                    })
+                }
+            });
+            docs.pop();
+            docs.push(foto);
+        }
+ 
 
         res.json(docs);
     });
@@ -127,6 +145,32 @@ router.post("/reaccion", (req, res) => {
     });
 
     return 'Reacción asignada';
+});
+
+router.delete("/delete", (req, res) =>{
+    var idFoto= req.body.idFoto;
+
+    if(idFoto != undefined){
+        res.status(400).json({
+            "message": "Invalid body params"
+        })
+        return false;
+    }
+
+    Foto.findByIdAndDelete({
+        idFoto: idFoto
+    }, function(err){
+        if(err){
+            res.status(500).json({
+                message: "Error en la base"
+            });
+            return false;
+        } else {
+            res.json({
+                message: "Ok"
+            });
+        }
+    });
 });
 
 module.exports = router;
