@@ -127,8 +127,8 @@ router.post("/reaccion", (req, res) => {
 
 
 router.post("/consultarpublicaciones", (req, res) => {
-    var skip = req.body.skip;
-    var limit = req.body.limit;
+    var skip = parseInt(req.body.skip, 10);
+    var limit = parseInt(req.body.limit, 10);
 
     if(skip === undefined){
         res.status(400).json({
@@ -152,10 +152,11 @@ router.post("/consultarpublicaciones", (req, res) => {
             var data = fs.readFileSync(doc.ubicacion).toString();
             
             var jsonPublicacion = {
+                idFoto: doc._id,
                 correo : doc.correo,
                 descripcion : doc.descripcion,
                 fecha : doc.fecha,
-                foto : data
+                foto : data                
             };
             jsonArrayResponse.push(jsonPublicacion);
         });
