@@ -61,7 +61,23 @@ router.post("/agregar", (req,res) => {
         })
         return
     }
-
+    Contacto.find({
+        relacion: correo
+    },function (err,doc) {
+        if (err) {
+            res.status(500).json({
+                message: "Error en la BD"
+            })
+            console.error(err);
+            return
+        }
+        if(doc){
+            res.json({
+                message: "Este usuario ya es su contacto"
+            })
+            return
+        }
+    });
     Usuario.findOne({
         correo: correoContacto,
     }, function (err,user) {
@@ -83,27 +99,8 @@ router.post("/agregar", (req,res) => {
                         })
                         console.error(err);
                         return
-                    }else{
-                        if(doc){
-                            relacion = "bidirecional";
-                            Contacto.updateOne({
-                                correo: correoContacto
-                            }, {
-                                relacion: relacion
-                            }, function(err){
-                                res.status(500).json({
-                                    message: "Error al ejecutar update"
-                                })
-                                console.error(err);
-                                return;
-                            })
-                            print(relacion)
-                        }
-                        print(relacion)
                     }
-                    print(relacion)
                 });
-                print(relacion)
                 var contacto = new Contacto({
                     correo: correo,
                     agregado: correoContacto,
@@ -118,7 +115,7 @@ router.post("/agregar", (req,res) => {
                         return;
                     } 
                     res.json({
-                        ok
+                        message: "agregado"
                     });
                 });
             }
