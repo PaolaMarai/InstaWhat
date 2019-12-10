@@ -1,20 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Usuario = require("../dataaccess/model/Usuario");
-var jwt = require("jsonwebtoken");
-const fotoP = require('./api.fotoperfil.route');
-
-const fotoperfil = require('../dataaccess/model/FotoPerfil');
-const FotoPerfilMW = require('../MiddleWare/FotoPerfil');
-const filesaver = require('../MiddleWare/FIleSaver')
 const tokenMW = require('../MiddleWare/TokenMW');
 router.use(tokenMW);
-
-const randomMin = 1000;
-const randomMax = 9999;
-const nuevoStatus = 'nuevo';
-const nuevoEstado = 'Hola soy nuevo'
-const statusActivo = 'activado'
 
 
 router.get("/", (req, res) => {
@@ -88,15 +76,17 @@ router.post("/editarestado", (req, res) => {
 });
 
 
-router.post("/editar", (req, res) => {
+router.post("/editarpassword", (req, res) => {
 
     var correo = req.body.correo;
-    var estado = req.body.estado;
+    var password = req.body.password;
+    var passwordnueva = req.body.passwordnueva;
 
     Usuario.updateOne({
-            correo : correo
+            correo : correo,
+            password : password
         }, {
-            estado : estado
+            password : passwordnueva
         }, function(err, doc){
             if (err) {
                 res.status(500).json({
@@ -111,6 +101,29 @@ router.post("/editar", (req, res) => {
         });
 });
 
+router.post("/editarusername", (req, res) => {
+
+    var correo = req.body.correo;
+    var username = req.body.username;
+
+    console.log(req.body);
+    Usuario.updateOne({
+            correo : correo
+        }, {
+            username : username
+        }, function(err, doc){
+            if (err) {
+                res.status(500).json({
+                    message: "Error al ejecutar update"
+                });
+                console.error(err);
+                return;
+            } else {
+                res.json(doc);
+            }
+           
+        });
+});
 
 
 module.exports = router;
